@@ -63,10 +63,10 @@ def load_level(filename):
 
 
 tile_images = {
-    'wall': load_image('вирус.png'),
-    'empty': load_image('')
+    'wall': load_image('box.png'),
+    'empty': load_image('grass.png')
 }
-player_image = load_image('mar.jpg', -1)
+player_image = load_image('mar.png', -1)
 
 tile_width = tile_height = 50
 
