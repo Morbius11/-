@@ -3,7 +3,7 @@ import sys
 import os
 
 pygame.init()
-size = width, height = 800, 500
+size = width, height = 1900, 1060
 screen = pygame.display.set_mode(size)
 FPS = 50
 clock = pygame.time.Clock()
