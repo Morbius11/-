@@ -10,9 +10,10 @@ clock = pygame.time.Clock()
 
 
 class Fon(pygame.sprite.Sprite):
+
     def __init__(self, *group):
         super().__init__(*group)
-        self.image = load_image('фон.jpg')
+        self.image = load_image('фон.png')
         self.image = pygame.transform.scale(self.image, size)
         self.rect = self.image.get_rect()
 
@@ -45,7 +46,7 @@ def start_screen():
 
     while True:
         for event in pygame.event.get():
-            if event.type == pygame.QUIT():
+            if event.type == pygame.QUIT:
                 terminate()
             elif event.type == pygame.KEYDOWN or event.type == pygame.MOUSEBUTTONDOWN:
                 return
@@ -66,7 +67,7 @@ tile_images = {
     'wall': load_image('box.png'),
     'empty': load_image('grass.png')
 }
-player_image = load_image('mar.png', -1)
+player_image = load_image('mar.png', -2)
 
 tile_width = tile_height = 50
 
