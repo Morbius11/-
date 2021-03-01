@@ -13,7 +13,7 @@ class Fon(pygame.sprite.Sprite):
 
     def __init__(self, *group):
         super().__init__(*group)
-        self.image = load_image('фон.png')
+        self.image = load_image('fon.png')
         self.image = pygame.transform.scale(self.image, size)
         self.rect = self.image.get_rect()
 
@@ -65,9 +65,10 @@ def load_level(filename):
 
 tile_images = {
     'wall': load_image('box.png'),
-    'empty': load_image('grass.png')
+    'empty': load_image('grass.png'),
+    'winstar': load_image('winstar.png')
 }
-player_image = load_image('mar.png', -2)
+player_image = load_image('mar2.png', -2)
 
 tile_width = tile_height = 50
 
@@ -77,6 +78,8 @@ class Tile(pygame.sprite.Sprite):
         super().__init__(tiles_group, all_sprites)
         if tile_type == 'wall':
             walls_group.add(self)
+        if tile_type == 'winstar':
+            win_group.add(self)
         self.image = tile_images[tile_type]
         self.rect = self.image.get_rect().move(
             tile_width * pos_x, tile_height * pos_y)
@@ -107,16 +110,26 @@ class Player(pygame.sprite.Sprite):
                 self.rect.y += 50
             if event.key == pygame.K_DOWN:
                 self.rect.y -= 50
+        if self.rect.x in range(finish[0] - 50, finish[0] + 50) and \
+                self.rect.y in range(finish[1] - 50, finish[1] + 50):
+            terminate()
 
+class Finish(pygame.sprite.Sprite):
+
+    def __init__(self, group):
+        super().__init__(group)
+        self.rect = self.image.get_rect()
 
 player = None
 all_sprites = pygame.sprite.Group()
 tiles_group = pygame.sprite.Group()
 player_group = pygame.sprite.Group()
 walls_group = pygame.sprite.Group()
+win_group = pygame.sprite.Group()
 
 
 def generate_level(level):
+    global finish
     new_player, x, y = None, None, None
     for y in range(len(level)):
         for x in range(len(level[y])):
@@ -124,6 +137,9 @@ def generate_level(level):
                 Tile('empty', x, y)
             elif level[y][x] == '#':
                 Tile('wall', x, y)
+            elif level[y][x] == '*':
+                Tile('winstar', x, y)
+                finish = tile_width * x, tile_height * y
             elif level[y][x] == '@':
                 Tile('empty', x, y)
                 new_player = Player(x, y)
