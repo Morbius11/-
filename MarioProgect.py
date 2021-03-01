@@ -66,7 +66,8 @@ def load_level(filename):
 tile_images = {
     'wall': load_image('box.png'),
     'empty': load_image('grass.png'),
-    'winstar': load_image('winstar.png')
+    'winstar': load_image('winstar.png'),
+    'fake': load_image('fake.png')
 }
 player_image = load_image('mar2.png', -2)
 
@@ -135,6 +136,8 @@ def generate_level(level):
         for x in range(len(level[y])):
             if level[y][x] == '.':
                 Tile('empty', x, y)
+            elif level[y][x] == '-':
+                Tile('fake', x, y)
             elif level[y][x] == '#':
                 Tile('wall', x, y)
             elif level[y][x] == '*':
